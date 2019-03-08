@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CarpoolApplication.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,10 +28,15 @@ namespace CarpoolApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<CarpoolContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("CarpoolContext")));
+            services.AddOpenApiDocument();
+            services.AddScoped<CarpoolDataInitializer>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,CarpoolDataInitializer carpoolDataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -41,8 +48,12 @@ namespace CarpoolApplication
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
+            app.UseSwaggerUi3();
+            app.UseSwagger();
             app.UseMvc();
+            carpoolDataInitializer.InitializeData().Wait();
         }
     }
 }
