@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarpoolApplication.Data;
+using CarpoolApplication.Data.Repositories;
+using CarpoolApplication.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,9 +32,15 @@ namespace CarpoolApplication
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<CarpoolContext>(options =>
               options.UseSqlServer(Configuration.GetConnectionString("CarpoolContext")));
-            services.AddOpenApiDocument();
-            services.AddScoped<CarpoolDataInitializer>();
+            services.AddOpenApiDocument(c => {
+                c.DocumentName = "apidocs";
+                c.Title = "CarpoolAPI";
+                c.Version = "v1";
+                c.Description = "documentation for CarpoolAPI";
+            });
 
+            services.AddScoped<CarpoolDataInitializer>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

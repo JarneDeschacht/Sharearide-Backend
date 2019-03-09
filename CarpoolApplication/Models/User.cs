@@ -17,11 +17,11 @@ namespace CarpoolApplication.Models
         #endregion
 
         #region Properties
-        public int UserId { get; private set; }
+        public int UserId { get; set; }
         public string LastName
         {
             get => _lastName;
-            private set
+            set
             {
                 if (string.IsNullOrWhiteSpace(value) || value.Length > 100)
                     throw new ArgumentException("LastName cannot be empty and should not exceed 100 characters");
@@ -32,7 +32,7 @@ namespace CarpoolApplication.Models
         public string FirstName
         {
             get => _firstName;
-            private set
+            set
             {
                 if (string.IsNullOrWhiteSpace(value) || value.Length > 100)
                     throw new ArgumentException("FirstName cannot be empty and should not exceed 100 characters");
@@ -42,7 +42,7 @@ namespace CarpoolApplication.Models
         public string Email
         {
             get => _email;
-            private set
+            set
             {
                 Regex emailcheck = new Regex(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}");
                 if (value == null || !emailcheck.IsMatch(value))
@@ -50,11 +50,11 @@ namespace CarpoolApplication.Models
                 _email = value;
             }
         }
-        public Gender Gender { get; private set; }
+        public Gender Gender { get; set; }
         public DateTime DateOfBirth
         {
             get => _dateOfBirth;
-            private set
+            set
             {
                 TimeSpan age = DateTime.Now - value.Date;
                 if (value == null || value.Date >= DateTime.Today || !IsValidBornDate(value))
@@ -65,7 +65,7 @@ namespace CarpoolApplication.Models
         public string PhoneNumber
         {
             get => _phoneNumber;
-            private set
+            set
             {
                 if (value == null)
                     throw new ArgumentException("Phonenumber is not valid");
