@@ -67,7 +67,7 @@ namespace CarpoolApplication.Models
             get => _phoneNumber;
             set
             {
-                if (value == null)
+                if (value == null || string.IsNullOrWhiteSpace(value) || value.Length > 15)
                     throw new ArgumentException("Phonenumber is not valid");
                 _phoneNumber = value;
             }
