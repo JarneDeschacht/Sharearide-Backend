@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using sharearideApplication.Models;
+using Sharearide.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace sharearideApplication.Controllers
+namespace Sharearide.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]

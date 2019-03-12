@@ -1,12 +1,12 @@
-﻿using sharearideApplication.Data.Mappers;
-using sharearideApplication.Models;
+﻿using Sharearide.Data.Mappers;
+using Sharearide.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sharearideApplication.Data
+namespace Sharearide.Data
 {
     public class sharearideContext : DbContext
     {

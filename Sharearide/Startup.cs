@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using sharearideApplication.Data;
-using sharearideApplication.Data.Repositories;
-using sharearideApplication.Models;
+using Sharearide.Data;
+using Sharearide.Data.Repositories;
+using Sharearide.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace sharearideApplication
+namespace Sharearide
 {
     public class Startup
     {

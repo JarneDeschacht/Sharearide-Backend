@@ -1,10 +1,10 @@
-﻿using sharearideApplication.Models;
+﻿using Sharearide.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace sharearideApplication.Tests.Models
+namespace Sharearide.Tests.Models
 {
     public class UserTest
     {

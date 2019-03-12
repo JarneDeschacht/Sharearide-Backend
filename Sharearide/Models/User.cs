@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace sharearideApplication.Models
+namespace Sharearide.Models
 {
     public class User
     {

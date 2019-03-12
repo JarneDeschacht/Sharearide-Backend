@@ -1,10 +1,10 @@
-﻿using sharearideApplication.Models;
+﻿using Sharearide.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sharearideApplication.Data
+namespace Sharearide.Data
 {
     public class DataInitializer
     {
