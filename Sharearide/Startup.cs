@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarpoolApplication.Data;
-using CarpoolApplication.Data.Repositories;
-using CarpoolApplication.Models;
+using sharearideApplication.Data;
+using sharearideApplication.Data.Repositories;
+using sharearideApplication.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -15,7 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace CarpoolApplication
+namespace sharearideApplication
 {
     public class Startup
     {
@@ -30,21 +30,21 @@ namespace CarpoolApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<CarpoolContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("CarpoolContext")));
+            services.AddDbContext<sharearideContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("sharearideContext")));
             services.AddOpenApiDocument(c => {
                 c.DocumentName = "apidocs";
-                c.Title = "CarpoolAPI";
+                c.Title = "sharearideAPI";
                 c.Version = "v1";
-                c.Description = "documentation for CarpoolAPI";
+                c.Description = "documentation for sharearideAPI";
             });
 
-            services.AddScoped<CarpoolDataInitializer>();
+            services.AddScoped<DataInitializer>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,CarpoolDataInitializer carpoolDataInitializer)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,DataInitializer sharearideDataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -61,7 +61,7 @@ namespace CarpoolApplication
             app.UseSwaggerUi3();
             app.UseSwagger();
             app.UseMvc();
-            carpoolDataInitializer.InitializeData().Wait();
+            sharearideDataInitializer.InitializeData().Wait();
         }
     }
 }

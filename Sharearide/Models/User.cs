@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CarpoolApplication.Models
+namespace sharearideApplication.Models
 {
     public class User
     {

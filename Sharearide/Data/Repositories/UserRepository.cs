@@ -1,18 +1,18 @@
-﻿using CarpoolApplication.Models;
+﻿using sharearideApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarpoolApplication.Data.Repositories
+namespace sharearideApplication.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly CarpoolContext _context;
+        private readonly sharearideContext _context;
         private readonly DbSet<User> _users;
 
-        public UserRepository(CarpoolContext dbContext)
+        public UserRepository(sharearideContext dbContext)
         {
             _context = dbContext;
             _users = dbContext.Users;

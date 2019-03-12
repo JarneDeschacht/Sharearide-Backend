@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarpoolApplication\CarpoolApplication.csproj" />
+    <ProjectReference Include="..\Sharearide\Sharearide.csproj" />
   </ItemGroup>
 
 </Project>

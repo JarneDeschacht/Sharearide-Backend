@@ -1,10 +1,10 @@
-﻿using CarpoolApplication.Models;
+﻿using sharearideApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace CarpoolApplication.Tests.Models
+namespace sharearideApplication.Tests.Models
 {
     public class UserTest
     {

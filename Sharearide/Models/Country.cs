@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarpoolApplication.Models
+namespace sharearideApplication.Models
 {
     public enum Country
     {

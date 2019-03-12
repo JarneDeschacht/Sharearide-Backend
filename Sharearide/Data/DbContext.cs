@@ -1,18 +1,18 @@
-﻿using CarpoolApplication.Data.Mappers;
-using CarpoolApplication.Models;
+﻿using sharearideApplication.Data.Mappers;
+using sharearideApplication.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarpoolApplication.Data
+namespace sharearideApplication.Data
 {
-    public class CarpoolContext : DbContext
+    public class sharearideContext : DbContext
     {
         public DbSet<User> Users { get; set; }
 
-        public CarpoolContext(DbContextOptions<CarpoolContext> options)
+        public sharearideContext(DbContextOptions<sharearideContext> options)
             : base(options)
         {
         }

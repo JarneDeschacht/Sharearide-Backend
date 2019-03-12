@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CarpoolApplication.Models;
+using sharearideApplication.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarpoolApplication.Controllers
+namespace sharearideApplication.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]

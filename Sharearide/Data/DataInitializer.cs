@@ -1,16 +1,16 @@
-﻿using CarpoolApplication.Models;
+﻿using sharearideApplication.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarpoolApplication.Data
+namespace sharearideApplication.Data
 {
-    public class CarpoolDataInitializer
+    public class DataInitializer
     {
-        private readonly CarpoolContext _dbContext;
+        private readonly sharearideContext _dbContext;
 
-        public CarpoolDataInitializer(CarpoolContext dbContext)
+        public DataInitializer(sharearideContext dbContext)
         {
             _dbContext = dbContext;
         }

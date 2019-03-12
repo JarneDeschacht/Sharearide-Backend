@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CarpoolApplication": {
+    "sharearideApplication": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

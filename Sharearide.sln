@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarpoolApplication", "CarpoolApplication\CarpoolApplication.csproj", "{AC26DD9B-C5D8-4B8C-BDDA-D5DF85D2EF61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharearide", "Sharearide\Sharearide.csproj", "{AC26DD9B-C5D8-4B8C-BDDA-D5DF85D2EF61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarpoolApplication.Tests", "CarpoolApplication.Tests\CarpoolApplication.Tests.csproj", "{9385DFBB-2BDB-4684-9966-1DA5A4597C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sharearide.Tests", "Sharearide.Tests\Sharearide.Tests.csproj", "{9385DFBB-2BDB-4684-9966-1DA5A4597C6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
