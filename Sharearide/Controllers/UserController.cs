@@ -5,12 +5,15 @@ using System.Threading.Tasks;
 using Sharearide.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sharearide.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;

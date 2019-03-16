@@ -9,13 +9,13 @@ namespace Sharearide.Data.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly sharearideContext _context;
+        private readonly SharearideContext _context;
         private readonly DbSet<User> _users;
 
-        public UserRepository(sharearideContext dbContext)
+        public UserRepository(SharearideContext dbContext)
         {
             _context = dbContext;
-            _users = dbContext.Users;
+            _users = dbContext.Users_Domain;
         }
         public void Add(User user)
         {
