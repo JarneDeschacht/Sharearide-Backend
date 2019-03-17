@@ -15,7 +15,7 @@ namespace Sharearide.Data.Mappers
             builder.ToTable("City");
             builder.HasKey(t => t.Postalcode);
             builder.Property(t => t.Postalcode)
-                .HasMaxLength(4);
+                .HasMaxLength(10);
             builder.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(100);

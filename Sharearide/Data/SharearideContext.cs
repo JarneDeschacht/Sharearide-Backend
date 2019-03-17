@@ -12,6 +12,8 @@ namespace Sharearide.Data
     public class SharearideContext : IdentityDbContext
     {
         public DbSet<User> Users_Domain { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         public SharearideContext(DbContextOptions<SharearideContext> options)
             : base(options)

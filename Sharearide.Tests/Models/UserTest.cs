@@ -8,12 +8,14 @@ namespace Sharearide.Tests.Models
 {
     public class UserTest
     {
+        #region TestData
         private const int _userId = 1;
         private const string _firstName = "Jarne";
         private const string _lastName = "Deschacht";
         private const string _email = "jarne.deschacht@hotmail.com";
         private const string _phoneNumber = "0492554616";
-        private DateTime _dateOfBirth = new DateTime(1999,8,9);
+        private DateTime _dateOfBirth = new DateTime(1999, 8, 9); 
+        #endregion
 
         #region Constructor
         [Fact]

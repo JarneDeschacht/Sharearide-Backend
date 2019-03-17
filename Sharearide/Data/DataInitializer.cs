@@ -21,6 +21,7 @@ namespace Sharearide.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
+                #region Create Users and their account in Identity
                 User jarne = new User("Jarne", "Deschacht", "jarne.deschacht@student.hogent.be", "0492554616", new DateTime(1999, 8, 9), Gender.Male);
                 _dbContext.Users_Domain.Add(jarne);
                 User ime = new User("Ime", "Vandaele", "imevandaele@gmail.com", "0484977384", new DateTime(2000, 3, 8), Gender.Female);
@@ -31,6 +32,24 @@ namespace Sharearide.Data
                 await CreateUser(jarne.Email, "P@ssword1111");
                 await CreateUser(ime.Email, "P@ssword1111");
                 await CreateUser(camiel.Email, "P@ssword1111");
+                #endregion
+
+                #region Create cities
+                City paris = new City("75000", "Paris");
+                City antwerp = new City("2000", "Antwerp");
+                City washington = new City("20001", "Washington D.C.");
+                City venice = new City("30100", "Venice");
+                City bruges = new City("8000", "Bruges");
+
+                _dbContext.Cities.AddRange(paris, antwerp, washington, venice, bruges);
+
+                #endregion
+
+                #region Create Locations
+                Location home = new Location("16", "Zilverstraat", bruges, Country.Belgium);
+
+                _dbContext.Locations.AddRange(home);
+                #endregion
 
                 _dbContext.SaveChanges();
             }
