@@ -95,6 +95,7 @@ namespace Sharearide
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
             });
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -114,6 +115,7 @@ namespace Sharearide
             app.UseMvc();
             app.UseSwaggerUi3();
             app.UseSwagger();
+            app.UseCors("AllowAllOrigins");
             sharearideDataInitializer.InitializeData().Wait();
         }
     }

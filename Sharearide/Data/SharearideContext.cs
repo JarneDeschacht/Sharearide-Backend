@@ -22,6 +22,8 @@ namespace Sharearide.Data
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new CityConfiguration());
+            builder.ApplyConfiguration(new LocationConfiguration());
         }
     }
 }
