@@ -53,8 +53,10 @@ namespace Sharearide
                 }));
                 c.OperationProcessors.Add(new OperationSecurityScopeProcessor("JWT Token"));
             });
+
             services.AddScoped<DataInitializer>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<SharearideContext>();
 
