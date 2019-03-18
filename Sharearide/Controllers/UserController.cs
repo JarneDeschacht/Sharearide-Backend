@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Sharearide.Controllers
 {
+    [ApiConventionType(typeof(DefaultApiConventions))]
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
@@ -34,14 +35,14 @@ namespace Sharearide.Controllers
         }
 
         /// <summary>
-        /// Get user with given email
+        /// Get user with given id
         /// </summary>
-        /// <param name="email">the email of the user</param>
+        /// <param name="id">the id of the user</param>
         /// <returns>a single object of user</returns>
-        [HttpGet("{email}")]
-        public ActionResult<User> GetUser(string email)
+        [HttpGet("{id}")]
+        public ActionResult<User> GetUser(int id)
         {
-            var user = _userRepository.GetByEmail(email);
+            var user = _userRepository.GetById(id);
             if (user == null)
                 return NotFound();
             return user;
@@ -52,14 +53,44 @@ namespace Sharearide.Controllers
         /// </summary>
         /// <param name="user">the new user</param>
         [HttpPost]
-        public ActionResult<User> AddUser(User user)
+        public ActionResult<User> PostUser(User user)
         {
             if (user == null)
                 return NotFound();
 
             _userRepository.Add(user);
             _userRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetUser), new { email = user.Email }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
+        /// <summary>
+        /// Modifies a user
+        /// </summary>
+        /// <param name="id">id of the user to be modified</param>
+        /// <param name="user">the modified user</param>
+        [HttpPut("{id}")]
+        public IActionResult PutUser(int id, User user)
+        {
+            if (id != user.UserId)
+            {
+                return BadRequest();
+            }
+            _userRepository.Update(user);
+            _userRepository.SaveChanges();
+            return NoContent();
+        }
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="id">the id of the user to be deleted</param>
+        [HttpDelete("{id}")]
+        public ActionResult<User> DeleteUser(int id)
+        {
+            var user = _userRepository.GetById(id);
+            if (user == null) { return NotFound(); }
+            _userRepository.Delete(user);
+            _userRepository.SaveChanges();
+            return user;
+        }
+
     }
 }

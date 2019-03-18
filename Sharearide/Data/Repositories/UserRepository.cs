@@ -37,6 +37,10 @@ namespace Sharearide.Data.Repositories
         {
             return _users.SingleOrDefault(u => u.Email.Equals(email));
         }
+        public User GetById(int id)
+        {
+            return _users.SingleOrDefault(u => u.UserId == id);
+        }
 
         public void SaveChanges()
         {

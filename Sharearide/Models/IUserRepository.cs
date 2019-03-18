@@ -9,6 +9,7 @@ namespace Sharearide.Models
     {
         IEnumerable<User> GetAll();
         User GetByEmail(string email);
+        User GetById(int id);
         void Add(User user);
         void Delete(User user);
         void Update(User user);
