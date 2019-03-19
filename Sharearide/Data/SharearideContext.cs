@@ -28,6 +28,8 @@ namespace Sharearide.Data
             builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new LocationConfiguration());
             builder.ApplyConfiguration(new RideConfiguration());
+            builder.ApplyConfiguration(new LocationRideConfiguration());
+            builder.ApplyConfiguration(new UserRideConfiguration());
         }
     }
 }

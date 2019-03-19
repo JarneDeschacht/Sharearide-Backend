@@ -23,6 +23,8 @@ namespace Sharearide.Data.Mappers
             builder.Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(100);
+            builder.Ignore(u => u.Rides);
+            builder.Ignore(u => u.UserRides);
         }
     }
 }

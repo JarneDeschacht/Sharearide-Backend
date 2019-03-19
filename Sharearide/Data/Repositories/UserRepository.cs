@@ -41,7 +41,6 @@ namespace Sharearide.Data.Repositories
         {
             return _users.SingleOrDefault(u => u.UserId == id);
         }
-
         public void SaveChanges()
         {
             _context.SaveChanges();

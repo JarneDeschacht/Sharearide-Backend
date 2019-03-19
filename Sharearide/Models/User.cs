@@ -18,6 +18,8 @@ namespace Sharearide.Models
 
         #region Properties
         public int UserId { get; set; }
+        public ICollection<UserRide> UserRides { get; private set; }
+        public IEnumerable<Ride> Rides => UserRides != null ? UserRides.Select(r => r.Ride).ToList() : new List<Ride>();
         public string LastName
         {
             get => _lastName;
@@ -83,10 +85,11 @@ namespace Sharearide.Models
             PhoneNumber = phoneNumber;
             DateOfBirth = dateOfBirth;
             Gender = gender;
-        }
+            UserRides = new HashSet<UserRide>();
+    }
         public User()
         {
-
+            UserRides = new HashSet<UserRide>();
         }
         #endregion
 

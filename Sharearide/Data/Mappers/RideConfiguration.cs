@@ -21,12 +21,7 @@ namespace Sharearide.Data.Mappers
                 .WithMany()
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
-            builder.HasMany(r => r.Stopovers)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
-            builder.HasMany(r => r.People)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Ignore(r => r.Stopovers);
         }
     }
 }

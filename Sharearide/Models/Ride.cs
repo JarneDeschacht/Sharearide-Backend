@@ -18,7 +18,10 @@ namespace Sharearide.Models
         public int RideId { get; set; }
         public Location PickUpLocation { get; set; }
         public Location DropOffLocation { get; set; }
-        public ICollection<Location> Stopovers { get; set; }
+        public IEnumerable<Location> Stopovers => LocationRides != null ? LocationRides.Select(l => l.Location).ToList() : new List<Location>();
+        public IEnumerable<User> People => UserRides != null ? UserRides.Select(u => u.User).ToList() : new List<User>();
+        public ICollection<LocationRide> LocationRides { get; private set; }
+        public ICollection<UserRide> UserRides { get; private set; }
         public DateTime TravelDate
         {
             get => _travelDate;
@@ -61,7 +64,6 @@ namespace Sharearide.Models
                 _totalAvailableSeats = value;
             }
         }
-        public ICollection<User> People { get; set; }
         public bool IsSoldOut { get; set; }
         #endregion
 
@@ -72,19 +74,24 @@ namespace Sharearide.Models
         {
             PickUpLocation = pickup;
             DropOffLocation = dropOff;
-            Stopovers = stopovers == null ? new HashSet<Location>() : stopovers;
+            LocationRides = new HashSet<LocationRide>();
+            if (stopovers != null)
+            {
+                foreach (var loc in stopovers)
+                    LocationRides.Add(new LocationRide(loc, this));
+            }
             TravelDate = travelDate;
             IsRoundTrip = isRoundTrip;
             ReturnDate = returnDate;
             PassengerContribution = passengercontribution;
             TotalAvailableSeats = totalAvailableSeats;
-            People = new HashSet<User>();
+            UserRides = new HashSet<UserRide>();
             IsSoldOut = false;
         }
         public Ride()
         {
-            Stopovers = new HashSet<Location>();
-            People = new HashSet<User>();
+            LocationRides = new HashSet<LocationRide>();
+            UserRides = new HashSet<UserRide>();
         }
         #endregion
 
@@ -93,10 +100,10 @@ namespace Sharearide.Models
         {
             if (!IsSoldOut && user != null)
             {
-                if (People.Count < TotalAvailableSeats)
-                    People.Add(user);
+                if (People.Count() < TotalAvailableSeats)
+                    UserRides.Add(new UserRide(user, this));
 
-                if (People.Count == TotalAvailableSeats)
+                if (People.Count() == TotalAvailableSeats)
                     IsSoldOut = true;
             }
             else

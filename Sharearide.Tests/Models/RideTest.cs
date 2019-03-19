@@ -1,6 +1,7 @@
 ﻿using Sharearide.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Xunit;
 
@@ -42,7 +43,7 @@ namespace Sharearide.Tests.Models
             Assert.False(ride.IsSoldOut);
             Assert.Equal(_travelDate, ride.TravelDate);
             Assert.Equal(_returnDate, ride.ReturnDate);
-            Assert.Equal(1, ride.Stopovers.Count);
+            Assert.Equal(1, ride.LocationRides.Count);
             Assert.Empty(ride.People);
             Assert.Equal(_rideId, ride.RideId);
             Assert.Equal(_passengerContribution, ride.PassengerContribution);
@@ -59,7 +60,7 @@ namespace Sharearide.Tests.Models
             Assert.False(ride.IsSoldOut);
             Assert.Equal(_travelDate, ride.TravelDate);
             Assert.Equal(DateTime.MinValue,ride.ReturnDate);
-            Assert.Equal(1, ride.Stopovers.Count);
+            Assert.Equal(1, ride.LocationRides.Count);
             Assert.Empty(ride.People);
             Assert.Equal(_rideId, ride.RideId);
             Assert.Equal(_passengerContribution, ride.PassengerContribution);
@@ -89,7 +90,6 @@ namespace Sharearide.Tests.Models
             var ride = new Ride()
             {
                 RideId = _rideId,
-                Stopovers = _stopovers,
                 DropOffLocation = _dropOffLocation,
                 IsRoundTrip = true,
                 PassengerContribution = _passengerContribution,
@@ -104,7 +104,7 @@ namespace Sharearide.Tests.Models
             Assert.False(ride.IsSoldOut);
             Assert.Equal(_travelDate, ride.TravelDate);
             Assert.Equal(_returnDate, ride.ReturnDate);
-            Assert.Equal(1, ride.Stopovers.Count);
+            Assert.Empty(ride.LocationRides);
             Assert.Empty(ride.People);
             Assert.Equal(_rideId, ride.RideId);
             Assert.Equal(_passengerContribution, ride.PassengerContribution);
@@ -176,7 +176,7 @@ namespace Sharearide.Tests.Models
                 _returnDate, _passengerContribution, _totalAvailableSeats){ RideId = _rideId };
             Assert.Empty(ride.People);
             ride.AddUserToRide(_jarne);
-            Assert.Equal(1, ride.People.Count);
+            Assert.Equal(1, ride.UserRides.Count);
         }
         [Fact]
         public void AddUserToRide_MultipleValidUsers_AddsUsersToRide()
@@ -188,7 +188,7 @@ namespace Sharearide.Tests.Models
             ride.AddUserToRide(_jarne);
             ride.AddUserToRide(_ime);
             ride.AddUserToRide(_camiel);
-            Assert.Equal(3, ride.People.Count);
+            Assert.Equal(3, ride.UserRides.Count);
         }
         [Fact]
         public void AddUserToRide_UnvalidUser_ThrowsArgumentException()
@@ -219,18 +219,6 @@ namespace Sharearide.Tests.Models
             ride.AddUserToRide(_ime);
             Assert.Throws<ArgumentException>(() => ride.AddUserToRide(_camiel));
             Assert.True(ride.IsSoldOut);
-        }
-        [Fact]
-        public void AddUserToRide_AddSameUser2Times_NothingHappens()
-        {
-            var ride = new Ride(_pickupLocation, _dropOffLocation, _stopovers, _travelDate, true,
-                _returnDate, _passengerContribution,3)
-            { RideId = _rideId };
-            Assert.Empty(ride.People);
-            ride.AddUserToRide(_camiel);
-            ride.AddUserToRide(_jarne);
-            ride.AddUserToRide(_camiel);
-            Assert.Equal(2, ride.People.Count);
         }
         #endregion
     }
