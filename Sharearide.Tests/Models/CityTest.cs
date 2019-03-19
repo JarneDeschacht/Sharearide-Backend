@@ -17,9 +17,10 @@ namespace Sharearide.Tests.Models
         [InlineData("1234567890")]
         public void NewCity_ValidData_CreatesCity(string postalCode)
         {
-            City city = new City(postalCode, "Gent");
+            City city = new City(postalCode, "Gent",Country.Belgium);
             Assert.Equal(postalCode, city.Postalcode);
             Assert.Equal("Gent", city.Name);
+            Assert.Equal(Country.Belgium, city.Country);
         }
 
         [Theory]
@@ -34,7 +35,7 @@ namespace Sharearide.Tests.Models
         [InlineData("a1234")]
         public void NewCity_InvalidPostalCode_ThrowsArgumentException(string postalCode)
         {
-            Assert.Throws<ArgumentException>(() => new City(postalCode, "Gent"));
+            Assert.Throws<ArgumentException>(() => new City(postalCode, "Gent",Country.Belgium));
         }
 
         [Theory]
@@ -44,7 +45,7 @@ namespace Sharearide.Tests.Models
         [InlineData("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890")]
         public void NewCity_InvalidName_ThrowsArgumentException(string name)
         {
-            Assert.Throws<ArgumentException>(() => new City("9000", name));
+            Assert.Throws<ArgumentException>(() => new City("9000", name,Country.Belgium));
         }
 
         #endregion

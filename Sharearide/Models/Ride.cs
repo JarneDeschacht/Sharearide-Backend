@@ -36,7 +36,7 @@ namespace Sharearide.Models
             get => _returnDate;
             set
             {
-                if (IsRoundTrip && (value.Date <= DateTime.Today || value.Date <= _travelDate.Date))
+                if (IsRoundTrip && (value.Date <= DateTime.Today || value.Date < _travelDate.Date))
                     throw new ArgumentException("ReturnDate must be in the future and the return must be later than the travelDate");
                 _returnDate = value;
             }

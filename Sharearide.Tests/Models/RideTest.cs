@@ -11,12 +11,12 @@ namespace Sharearide.Tests.Models
         #region TestData
         private const int _rideId = 1;
         private readonly Location _pickupLocation = 
-            new Location("16","Zilverstraat",new City("8480","Ichtegem"),Country.Belgium);
+            new Location("16","Zilverstraat",new City("8480","Ichtegem",Country.Belgium));
         private readonly Location _dropOffLocation = 
-            new Location("1", "Molenstraat", new City("8210", "Zedelgem"), Country.Belgium,"I.M.E");
+            new Location("1", "Molenstraat", new City("8210", "Zedelgem", Country.Belgium),"I.M.E");
         private readonly ICollection<Location> _stopovers = new HashSet<Location>()
         {
-            new Location("88", "Eernegemweg", new City("8490", "Jabbeke"), Country.Belgium),
+            new Location("88", "Eernegemweg", new City("8490", "Jabbeke",Country.Belgium)),
         };
         private readonly DateTime _travelDate = DateTime.Today.AddDays(5);
         private readonly DateTime _returnDate = DateTime.Today.AddDays(10);
@@ -136,13 +136,6 @@ namespace Sharearide.Tests.Models
         {
             Assert.Throws<ArgumentException>(() => new Ride(_pickupLocation, _dropOffLocation, _stopovers, _travelDate, true,
                 DateTime.Today, _passengerContribution, _totalAvailableSeats)
-            { RideId = _rideId });
-        }
-        [Fact]
-        public void NewRide_ReturnDateOnTravelDate_ThrowsArgumentException()
-        {
-            Assert.Throws<ArgumentException>(() => new Ride(_pickupLocation, _dropOffLocation, _stopovers, _travelDate, true,
-                _travelDate, _passengerContribution, _totalAvailableSeats)
             { RideId = _rideId });
         }
         [Fact]

@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Sharearide.Models.City">
-    <Position X="1" Y="5.25" Width="1.25" />
+    <Position X="1" Y="5" Width="1.25" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAAAAAACQAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAACQAAAIAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Models\City.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Country" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="Sharearide.Models.Location">
     <Position X="3.25" Y="4" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAIQAAAAAAAAAAIAEAAAAAAAAIEAAAAAAIAACBAAAA=</HashCode>
+      <HashCode>AAAIQAAAAAAAAAAIAEAAAAAAAAAEAAAAAAIAACBAAAA=</HashCode>
       <FileName>Models\Location.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="City" />
-      <Property Name="Country" />
     </ShowAsAssociation>
   </Class>
   <Class Name="Sharearide.Models.Ride">
@@ -58,7 +60,7 @@
     </TypeIdentifier>
   </Interface>
   <Enum Name="Sharearide.Models.Country" Collapsed="true">
-    <Position X="3.5" Y="7.75" Width="1.5" />
+    <Position X="1" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>q/F4ZLfTIzr3mt0Q/YU0xnd6Epp+N7zWF3M2rhVA1b4=</HashCode>
       <FileName>Models\Country.cs</FileName>

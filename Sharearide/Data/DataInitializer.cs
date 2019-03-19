@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Sharearide.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sharearide.Data
@@ -34,21 +35,36 @@ namespace Sharearide.Data
                 await CreateUser(camiel.Email, "P@ssword1111");
                 #endregion
 
-                #region Create cities
-                City paris = new City("75000", "Paris");
-                City antwerp = new City("2000", "Antwerp");
-                City washington = new City("20001", "Washington D.C.");
-                City venice = new City("30100", "Venice");
-                City bruges = new City("8000", "Bruges");
+                #region Create Cities
+                City paris = new City("75000", "Paris",Country.France);
+                City antwerp = new City("2000", "Antwerp",Country.Belgium);
+                City washington = new City("20001", "Washington D.C.",Country.UnitedStates);
+                City venice = new City("30100", "Venice",Country.Italy);
+                City bruges = new City("8000", "Bruges",Country.Belgium);
+                City adam = new City("1000", "Amsterdam", Country.Netherlands);
 
-                _dbContext.Cities.AddRange(paris, antwerp, washington, venice, bruges);
+                _dbContext.Cities.AddRange(paris, antwerp, washington, venice, bruges,adam);
 
                 #endregion
 
                 #region Create Locations
-                Location home = new Location("16", "Zilverstraat", bruges, Country.Belgium);
+                Location home = new Location("16", "Zilverstraat", bruges);
+                Location stationAdam = new Location("15", "Stationsplein", adam);
+                Location wd = new Location("56", "Boulevard des Îles", paris,"Western Digital");
+                Location sportp = new Location("119", "Schijnpoortweg", antwerp, "Sportpaleis");
+                Location random = new Location("I502", "14th St NW", washington);
+                Location stationBruges = new Location("5", "stationsplein", bruges);
 
-                _dbContext.Locations.AddRange(home);
+                _dbContext.Locations.AddRange(home,wd,sportp,random,stationAdam,stationBruges);
+                #endregion
+
+                #region Create Rides
+                Ride homeToAdam = new Ride(home, stationAdam, new HashSet<Location>() { stationBruges, sportp },
+                    DateTime.Today.AddDays(5), true, DateTime.Today.AddDays(10), 49.75, 3);
+                Ride homeToSportP = new Ride(home, sportp, new HashSet<Location>() { stationBruges},
+                    DateTime.Today.AddDays(1), true, DateTime.Today.AddDays(1), 15.50, 4);
+
+                _dbContext.Rides.AddRange(homeToAdam,homeToSportP);
                 #endregion
 
                 _dbContext.SaveChanges();

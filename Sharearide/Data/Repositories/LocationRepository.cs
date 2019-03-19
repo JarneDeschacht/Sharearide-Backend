@@ -36,7 +36,7 @@ namespace Sharearide.Data.Repositories
             return _locations
                 .Include(l => l.City)
                 .AsNoTracking()
-                .OrderBy(l => l.Country)
+                .OrderBy(l => l.City.Country)
                 .ThenBy(l => l.City.Name)
                 .ToList();
         }
@@ -45,9 +45,9 @@ namespace Sharearide.Data.Repositories
         {
             return _locations
                 .Include(l => l.City)
-                .Where(l => l.Country == country)
+                .Where(l => l.City.Country == country)
                 .AsNoTracking()
-                .OrderBy(l => l.Country)
+                .OrderBy(l => l.City.Country)
                 .ThenBy(l => l.City.Name)
                 .ToList();
         }

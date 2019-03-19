@@ -46,16 +46,14 @@ namespace Sharearide.Models
             }
         }
         public City City { get; set; }
-        public Country Country { get; set; }
         #endregion
 
         #region Constructors
-        public Location(string number,string street,City city,Country country,string companyName = "")
+        public Location(string number,string street,City city,string companyName = "")
         {
             Number = number;
             Street = street;
             City = city;
-            Country = country;
             CompanyName = companyName;
         }
         public Location()

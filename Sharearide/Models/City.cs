@@ -36,13 +36,15 @@ namespace Sharearide.Models
                 _name = value;
             }
         }
+        public Country Country { get; set; }
         #endregion
 
         #region Contstructors
-        public City(string postalcode, string name)
+        public City(string postalcode, string name,Country country)
         {
             Postalcode = postalcode;
             Name = name;
+            Country = country;
         }
         #endregion
     }
