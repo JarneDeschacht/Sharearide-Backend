@@ -26,6 +26,7 @@ namespace Sharearide.Data
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new CityConfiguration());
             builder.ApplyConfiguration(new LocationConfiguration());
+            builder.ApplyConfiguration(new RideConfiguration());
         }
     }
 }

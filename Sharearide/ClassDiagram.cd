@@ -25,12 +25,12 @@
       <FileName>Models\Ride.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="DropOffLocation" />
       <Property Name="PickUpLocation" />
+      <Property Name="DropOffLocation" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="People" />
       <Property Name="Stopovers" />
+      <Property Name="People" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Sharearide.Models.User">
@@ -58,7 +58,7 @@
     </TypeIdentifier>
   </Interface>
   <Enum Name="Sharearide.Models.Country" Collapsed="true">
-    <Position X="3.5" Y="7.25" Width="1.5" />
+    <Position X="3.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>q/F4ZLfTIzr3mt0Q/YU0xnd6Epp+N7zWF3M2rhVA1b4=</HashCode>
       <FileName>Models\Country.cs</FileName>
