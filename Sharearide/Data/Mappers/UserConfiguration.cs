@@ -23,8 +23,10 @@ namespace Sharearide.Data.Mappers
             builder.Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(100);
+            builder.HasMany(u => u.UserRides)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
             builder.Ignore(u => u.Rides);
-            builder.Ignore(u => u.UserRides);
         }
     }
 }

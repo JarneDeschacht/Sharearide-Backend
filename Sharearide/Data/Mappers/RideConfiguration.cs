@@ -13,14 +13,15 @@ namespace Sharearide.Data.Mappers
         public void Configure(EntityTypeBuilder<Ride> builder)
         {
             builder.ToTable("Ride");
-            builder.HasKey(r => r.RideId);
             builder.HasOne(r => r.PickUpLocation)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(r => r.DropOffLocation)
                 .WithMany()
-                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(r => r.LocationRides)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
             builder.Ignore(r => r.Stopovers);
         }
     }

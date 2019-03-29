@@ -39,7 +39,10 @@ namespace Sharearide.Data.Repositories
         }
         public User GetById(int id)
         {
-            return _users.SingleOrDefault(u => u.UserId == id);
+            return _users
+                .Include(u => u.UserRides)
+                .ThenInclude(ur => ur.Ride)
+                .SingleOrDefault(u => u.UserId == id);
         }
         public void SaveChanges()
         {

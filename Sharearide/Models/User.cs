@@ -113,5 +113,13 @@ namespace Sharearide.Models
             Gender = gender;
         }
         #endregion
+
+        #region Methods
+        public void AddRideToUser(Ride ride)
+        {
+            if (ride.CanUserBeAdded(this))
+                UserRides.Add(new UserRide(this, ride));
+        }
+        #endregion
     }
 }

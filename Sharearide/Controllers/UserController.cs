@@ -14,7 +14,8 @@ namespace Sharearide.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -45,9 +46,21 @@ namespace Sharearide.Controllers
             var user = _userRepository.GetById(id);
             if (user == null)
                 return NotFound();
+
             return user;
         }
 
+        /// <summary>
+        /// Get user with given id
+        /// </summary>
+        /// <param name="id">the id of the user</param>
+        /// <returns>a single object of user</returns>
+        [HttpGet("{id}/rides/")]
+        public IEnumerable<Ride> GetRidesOfUser(int id)
+        {
+            var user = _userRepository.GetById(id);
+            return user.Rides;
+        }
         /// <summary>
         /// Adds a new user to the database
         /// </summary>
@@ -71,9 +84,8 @@ namespace Sharearide.Controllers
         public IActionResult PutUser(int id, User user)
         {
             if (id != user.UserId)
-            {
                 return BadRequest();
-            }
+
             _userRepository.Update(user);
             _userRepository.SaveChanges();
             return NoContent();
@@ -86,7 +98,9 @@ namespace Sharearide.Controllers
         public ActionResult<User> DeleteUser(int id)
         {
             var user = _userRepository.GetById(id);
-            if (user == null) { return NotFound(); }
+            if (user == null)
+                return NotFound();
+
             _userRepository.Delete(user);
             _userRepository.SaveChanges();
             return user;

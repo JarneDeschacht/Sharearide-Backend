@@ -12,16 +12,17 @@ namespace Sharearide.Models
         private DateTime _returnDate;
         private double _passengerContribution;
         private int _totalAvailableSeats;
+        private int _availableSeats;
         #endregion
 
         #region Properties
         public int RideId { get; set; }
         public Location PickUpLocation { get; set; }
         public Location DropOffLocation { get; set; }
-        public IEnumerable<Location> Stopovers => LocationRides != null ? LocationRides.Select(l => l.Location).ToList() : new List<Location>();
-        public IEnumerable<User> People => UserRides != null ? UserRides.Select(u => u.User).ToList() : new List<User>();
+        public IEnumerable<Location> Stopovers => LocationRides.Select(lr => lr.Location).ToList();
+        //public IEnumerable<User> People => UserRides.Select(u => u.User).ToList();
         public ICollection<LocationRide> LocationRides { get; private set; }
-        public ICollection<UserRide> UserRides { get; private set; }
+        //public ICollection<UserRide> UserRides { get; private set; }
         public DateTime TravelDate
         {
             get => _travelDate;
@@ -64,6 +65,16 @@ namespace Sharearide.Models
                 _totalAvailableSeats = value;
             }
         }
+        public int AvailableSeats
+        {
+            get => _availableSeats;
+            set
+            {
+                if (value < 0 || value > TotalAvailableSeats)
+                    throw new ArgumentException("Available seatsa cannot be les than zero and caanot exceed Total available seats");
+                _availableSeats = value;
+            }
+        }
         public bool IsSoldOut { get; set; }
         #endregion
 
@@ -74,7 +85,7 @@ namespace Sharearide.Models
         {
             PickUpLocation = pickup;
             DropOffLocation = dropOff;
-            LocationRides = new HashSet<LocationRide>();
+            LocationRides = new List<LocationRide>();
             if (stopovers != null)
             {
                 foreach (var loc in stopovers)
@@ -85,29 +96,32 @@ namespace Sharearide.Models
             ReturnDate = returnDate;
             PassengerContribution = passengercontribution;
             TotalAvailableSeats = totalAvailableSeats;
-            UserRides = new HashSet<UserRide>();
+            AvailableSeats = totalAvailableSeats;
+            //UserRides = new List<UserRide>();
             IsSoldOut = false;
         }
         public Ride()
         {
-            LocationRides = new HashSet<LocationRide>();
-            UserRides = new HashSet<UserRide>();
+            LocationRides = new List<LocationRide>();
+            //    UserRides = new List<UserRide>();
         }
         #endregion
 
         #region Methods
-        public void AddUserToRide(User user)
+        public Boolean CanUserBeAdded(User user)
         {
-            if (!IsSoldOut && user != null)
+            if (!IsSoldOut)
             {
-                if (People.Count() < TotalAvailableSeats)
-                    UserRides.Add(new UserRide(user, this));
+                if (AvailableSeats > 0)
+                {
+                    AvailableSeats--;
+                    return true;
+                }   
 
-                if (People.Count() == TotalAvailableSeats)
+                if (AvailableSeats == 0)
                     IsSoldOut = true;
             }
-            else
-                throw new ArgumentException("Ride is sold out");
+            return false;
         }
         #endregion
 

@@ -19,13 +19,12 @@ namespace Sharearide.Data.Mappers
                     .WithMany()
                     .HasForeignKey(t => t.LocationId)
                     .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);
-
+                    .OnDelete(DeleteBehavior.Restrict);
             builder.HasOne(pt => pt.Ride)
                     .WithMany(pt => pt.LocationRides)
                     .HasForeignKey(pt => pt.RideId)
                     .IsRequired()
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

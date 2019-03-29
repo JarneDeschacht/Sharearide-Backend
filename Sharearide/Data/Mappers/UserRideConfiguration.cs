@@ -16,13 +16,13 @@ namespace Sharearide.Data.Mappers
             builder.HasKey(t => new { t.UserId, t.RideId });
 
             builder.HasOne(t => t.User)
-                    .WithMany(t => t.UserRides)
+                    .WithMany(u => u.UserRides)
                     .HasForeignKey(t => t.UserId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(pt => pt.Ride)
-                    .WithMany(pt => pt.UserRides)
+                    .WithMany()
                     .HasForeignKey(pt => pt.RideId)
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Cascade);

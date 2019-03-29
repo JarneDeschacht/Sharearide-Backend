@@ -36,7 +36,7 @@ namespace Sharearide.Data
                 #endregion
 
                 #region Create Cities
-                City paris = new City("75000", "Paris",Country.France);
+                City paris = new City("75000", "Paris", Country.France);
                 City antwerp = new City("2000", "Antwerp",Country.Belgium);
                 City washington = new City("20001", "Washington D.C.",Country.UnitedStates);
                 City venice = new City("30100", "Venice",Country.Italy);
@@ -50,7 +50,7 @@ namespace Sharearide.Data
                 #region Create Locations
                 Location home = new Location("16", "Zilverstraat", bruges);
                 Location stationAdam = new Location("15", "Stationsplein", adam);
-                Location wd = new Location("56", "Boulevard des Îles", paris,"Western Digital");
+                Location wd = new Location("56", "Boulevard des Îles", paris, "Western Digital");
                 Location sportp = new Location("119", "Schijnpoortweg", antwerp, "Sportpaleis");
                 Location random = new Location("I502", "14th St NW", washington);
                 Location stationBruges = new Location("5", "Stationsplein", bruges);
@@ -60,11 +60,11 @@ namespace Sharearide.Data
 
                 #region Create Rides
                 Ride homeToAdam = new Ride(home, stationAdam, new HashSet<Location>() { stationBruges, sportp },
-                    DateTime.Today.AddDays(5), true, DateTime.Today.AddDays(10), 49.75, 3);
-                homeToAdam.AddUserToRide(jarne);
-                homeToAdam.AddUserToRide(ime);
+                    DateTime.Today.AddDays(5), true, DateTime.Today.AddDays(10), 24.87, 3);
+                jarne.AddRideToUser(homeToAdam);
+                ime.AddRideToUser(homeToAdam);
                 Ride homeToSportP = new Ride(home, sportp, new HashSet<Location>() { stationBruges},
-                    DateTime.Today.AddDays(1), true, DateTime.Today.AddDays(1), 15.50, 4);
+                    DateTime.Today.AddDays(1), true, DateTime.Today.AddDays(1), 11.50, 4);
 
                 _dbContext.Rides.AddRange(homeToAdam,homeToSportP);
                 #endregion
