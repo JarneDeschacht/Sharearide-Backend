@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="Sharearide.Models.City">
-    <Position X="16.5" Y="3.75" Width="1.5" />
+    <Position X="17.25" Y="0.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAAAAAAAAAAAACQAAAIAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Models\City.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Country" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="Sharearide.Models.Location">
-    <Position X="13.75" Y="4" Width="2" />
+    <Position X="15.75" Y="4" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAIQAAAAAAAAAAIAEAAAAAAAAAEAAAAAAIAACBAAAA=</HashCode>
       <FileName>Models\Location.cs</FileName>
@@ -18,7 +21,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Sharearide.Models.LocationRide">
-    <Position X="10.75" Y="0.5" Width="2.25" />
+    <Position X="9" Y="0.5" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAIAABAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\LocationRide.cs</FileName>
@@ -29,14 +32,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Sharearide.Models.Ride">
-    <Position X="10.25" Y="4" Width="2" />
+    <Position X="10.5" Y="4" Width="4.25" />
     <TypeIdentifier>
       <HashCode>BCAAAgiAAIAAACABIAAAAAIAEAAACgAAAAAABAIAAAA=</HashCode>
       <FileName>Models\Ride.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="DropOffLocation" />
       <Property Name="PickUpLocation" />
+      <Property Name="DropOffLocation" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="LocationRides" />
@@ -44,7 +47,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Sharearide.Models.User">
-    <Position X="3.5" Y="3.5" Width="1.75" />
+    <Position X="3" Y="3.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAEBAEAAACAAAACAAAEIQBgAAAAQCAAAAAAAAAAQAgk=</HashCode>
       <FileName>Models\User.cs</FileName>
@@ -57,14 +60,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Sharearide.Models.UserRide">
-    <Position X="6.75" Y="4.75" Width="2" />
+    <Position X="6.5" Y="4.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAABAABAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\UserRide.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Ride" />
       <Property Name="User" />
+      <Property Name="Ride" />
     </ShowAsAssociation>
   </Class>
   <Interface Name="Sharearide.Models.ILocationRepository">
@@ -81,8 +84,8 @@
       <FileName>Models\IUserRepository.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Enum Name="Sharearide.Models.Country" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+  <Enum Name="Sharearide.Models.Country">
+    <Position X="19.25" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>q/F4ZLfTIzr3mt0Q/YU0xnd6Epp+N7zWF3M2rhVA1b4=</HashCode>
       <FileName>Models\Country.cs</FileName>

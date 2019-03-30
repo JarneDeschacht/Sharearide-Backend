@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sharearide.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace Sharearide.Models
 {
     public interface IRideRepository
     {
-        IEnumerable<Ride> GetAll();
+        IEnumerable<RideDTO> GetAll();
         IEnumerable<Ride> GetByUser(User user);
         Ride GetById(int id);
         void Add(Ride ride);

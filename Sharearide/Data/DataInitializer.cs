@@ -42,13 +42,14 @@ namespace Sharearide.Data
                 City venice = new City("30100", "Venice",Country.Italy);
                 City bruges = new City("8000", "Bruges",Country.Belgium);
                 City adam = new City("1000", "Amsterdam", Country.Netherlands);
+                City bekegem = new City("8480", "Bekegem", Country.Belgium);
 
                 _dbContext.Cities.AddRange(paris, antwerp, washington, venice, bruges,adam);
 
                 #endregion
 
                 #region Create Locations
-                Location home = new Location("16", "Zilverstraat", bruges);
+                Location home = new Location("16", "Zilverstraat", bekegem);
                 Location stationAdam = new Location("15", "Stationsplein", adam);
                 Location wd = new Location("56", "Boulevard des Îles", paris, "Western Digital");
                 Location sportp = new Location("119", "Schijnpoortweg", antwerp, "Sportpaleis");

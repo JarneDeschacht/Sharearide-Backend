@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sharearide.DTOs;
 using Sharearide.Models;
 using System;
 using System.Collections.Generic;
@@ -28,22 +29,45 @@ namespace Sharearide.Data.Repositories
             _rides.Remove(ride);
         }
 
-        public IEnumerable<Ride> GetAll()
+        public IEnumerable<RideDTO> GetAll()
         {
-            return _rides
+            var rides = _rides
                 .Include(r => r.DropOffLocation).ThenInclude(drop => drop.City)
                 .Include(r => r.PickUpLocation).ThenInclude(pick => pick.City)
+                .Include(r => r.LocationRides)
+                .ThenInclude(lr => lr.Location)
+                .ThenInclude(l => l.City)
                 .ToList();
+            ICollection<RideDTO> ridesDTO = new List<RideDTO>();
+
+            foreach (Ride r in rides)
+            {
+                ridesDTO.Add(new RideDTO()
+                {
+                    AvailableSeats = r.AvailableSeats,
+                    DropOffLocation = r.DropOffLocation,
+                    IsSoldOut = r.IsSoldOut,
+                    PassengerContribution = r.PassengerContribution,
+                    PickUpLocation = r.PickUpLocation,
+                    ReturnDate = r.ReturnDate,
+                    RideId = r.RideId,
+                    Stopovers = r.Stopovers,
+                    TotalAvailableSeats = r.TotalAvailableSeats,
+                    TravelDate = r.TravelDate,
+                    IsRoundTrip = r.IsRoundTrip
+                });
+            }
+            return ridesDTO;
         }
 
         public Ride GetById(int id)
         {
             return _rides
+                .Include(r => r.DropOffLocation).ThenInclude(drop => drop.City)
+                .Include(r => r.PickUpLocation).ThenInclude(pick => pick.City)
                 .Include(r => r.LocationRides)
                 .ThenInclude(lr => lr.Location)
                 .ThenInclude(l => l.City)
-                //.Include(r => r.UserRides)
-                //.ThenInclude(ur => ur.User)
                 .SingleOrDefault(r => r.RideId == id);
         }
 

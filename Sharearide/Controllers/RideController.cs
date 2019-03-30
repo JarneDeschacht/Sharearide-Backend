@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sharearide.DTOs;
 using Sharearide.Models;
 
 namespace Sharearide.Controllers
@@ -24,20 +25,9 @@ namespace Sharearide.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Ride> GetAllRides()
+        public IEnumerable<RideDTO> GetAllRides()
         {
-            var rides = _rideRepository.GetAll();
-            return rides;
+            return _rideRepository.GetAll();
         }
-        [HttpGet("{id}/stopovers/")]
-        public IEnumerable<Location> GetStopoversOfRide(int id)
-        {
-            return _rideRepository.GetById(id).Stopovers;
-        }
-        //[HttpGet("{id}/people/")]
-        //public IEnumerable<User> GetPeopleOfRide(int id)
-        //{
-        //    return _rideRepository.GetById(id).People;
-        //}
     }
 }
