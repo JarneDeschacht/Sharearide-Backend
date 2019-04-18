@@ -41,9 +41,10 @@ namespace Sharearide.Controllers
         /// <param name="model">the login details</param>
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<String>> CreateToken(LoginDTO model)
+        public async Task<ActionResult<UserDTO>> CreateToken(LoginDTO model)
         {
             var user = await _userManager.FindByNameAsync(model.Email);
+            UserDTO userIn = _userRepository.GetByEmail(model.Email);
 
             if (user != null)
             {
@@ -51,12 +52,13 @@ namespace Sharearide.Controllers
 
                 if (result.Succeeded)
                 {
-                    string token = GetToken(user);
-                     return Created("", token); //returns only the token                    
+                    userIn.Token = GetToken(user);
+                    return Ok(userIn); //returns the user                 
                 }
             }
-                return BadRequest();
+            return BadRequest();
         }
+
 
         /// <summary>
         /// Register a user
@@ -65,18 +67,19 @@ namespace Sharearide.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("register")]
-        public async Task<ActionResult<String>> Register(RegisterDTO model)
+        public async Task<ActionResult<UserDTO>> Register(RegisterDTO model)
         {
             IdentityUser user = new IdentityUser { UserName = model.Email, Email = model.Email };
             User usr = new User { Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,DateOfBirth = model.DateOfBirth,Gender = model.Gender,PhoneNumber = model.PhoneNumber };
             var result = await _userManager.CreateAsync(user, model.Password);
+            
 
             if (result.Succeeded)
             {
                 _userRepository.Add(usr);
                 _userRepository.SaveChanges();
-                string token = GetToken(user);
-                return Created("", token);
+                usr.Token = GetToken(user);
+                return Ok(_userRepository.GetByEmail(usr.Email));
             }
             return BadRequest();
         }

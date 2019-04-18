@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Sharearide.DTOs;
 
 namespace Sharearide.Controllers
 {
@@ -14,15 +15,16 @@ namespace Sharearide.Controllers
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRideRepository _rideRepository;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository,IRideRepository rideRepository)
         {
             _userRepository = userRepository;
+            _rideRepository = rideRepository;
         }
 
         /// <summary>
@@ -36,14 +38,14 @@ namespace Sharearide.Controllers
         }
 
         /// <summary>
-        /// Get user with given id
+        /// Get user with given email
         /// </summary>
-        /// <param name="id">the id of the user</param>
+        /// <param name="email">the email of the user</param>
         /// <returns>a single object of user</returns>
-        [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        [HttpGet("{email}")]
+        public ActionResult<UserDTO> GetUser(string email)
         {
-            var user = _userRepository.GetById(id);
+            var user = _userRepository.GetByEmail(email);
             if (user == null)
                 return NotFound();
 
@@ -56,10 +58,15 @@ namespace Sharearide.Controllers
         /// <param name="id">the id of the user</param>
         /// <returns>a single object of user</returns>
         [HttpGet("{id}/rides/")]
-        public IEnumerable<Ride> GetRidesOfUser(int id)
+        public IEnumerable<RideDTO> GetRidesOfUser(int id)
         {
             var user = _userRepository.GetById(id);
-            return user.Rides;
+            ICollection<RideDTO> rides = new List<RideDTO>();
+            foreach (Ride r in user.ParticipatedRides)
+            {
+                rides.Add(_rideRepository.GetById(r.RideId));
+            }
+            return rides;
         }
         /// <summary>
         /// Adds a new user to the database
@@ -81,14 +88,14 @@ namespace Sharearide.Controllers
         /// <param name="id">id of the user to be modified</param>
         /// <param name="user">the modified user</param>
         [HttpPut("{id}")]
-        public IActionResult PutUser(int id, User user)
+        public ActionResult<UserDTO> PutUser(int id, UserDTO user)
         {
-            if (id != user.UserId)
+            if (id != user.id)
                 return BadRequest();
 
-            _userRepository.Update(user);
+            var usr = _userRepository.Update(user);
             _userRepository.SaveChanges();
-            return NoContent();
+            return usr;
         }
         /// <summary>
         /// Deletes a user

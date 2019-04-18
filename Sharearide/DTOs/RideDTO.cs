@@ -20,5 +20,20 @@ namespace Sharearide.DTOs
         public int AvailableSeats { get; set; }
         public bool IsSoldOut { get; set; }
         public bool IsRoundTrip { get; set; }
+
+        public RideDTO(Ride r)
+        {
+            AvailableSeats = r.AvailableSeats;
+            DropOffLocation = r.DropOffLocation;
+            IsSoldOut = r.IsSoldOut;
+            PassengerContribution = r.PassengerContribution;
+            PickUpLocation = r.PickUpLocation;
+            ReturnDate = r.ReturnDate;
+            RideId = r.RideId;
+            Stopovers = r.Stopovers;
+            TotalAvailableSeats = r.TotalAvailableSeats;
+            TravelDate = r.TravelDate;
+            IsRoundTrip = r.IsRoundTrip;
+        }
     }
 }

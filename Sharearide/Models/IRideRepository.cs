@@ -9,8 +9,7 @@ namespace Sharearide.Models
     public interface IRideRepository
     {
         IEnumerable<RideDTO> GetAll();
-        IEnumerable<Ride> GetByUser(User user);
-        Ride GetById(int id);
+        RideDTO GetById(int id);
         void Add(Ride ride);
         void Delete(Ride ride);
         void Update(Ride ride);

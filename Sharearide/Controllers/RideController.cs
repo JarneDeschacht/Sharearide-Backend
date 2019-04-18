@@ -14,7 +14,6 @@ namespace Sharearide.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    [AllowAnonymous] //temp
     public class RideController : ControllerBase
     {
         private readonly IRideRepository _rideRepository;

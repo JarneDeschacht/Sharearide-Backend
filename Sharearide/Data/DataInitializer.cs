@@ -25,7 +25,7 @@ namespace Sharearide.Data
                 #region Create Users and their account in Identity
                 User jarne = new User("Jarne", "Deschacht", "jarne.deschacht@student.hogent.be", "0492554616", new DateTime(1999, 8, 9), Gender.Male);
                 _dbContext.Users_Domain.Add(jarne);
-                User ime = new User("Ime", "Vandaele", "imevandaele@gmail.com", "0484977384", new DateTime(2000, 3, 8), Gender.Female);
+                User ime = new User("Ime", "Van Daele", "imevandaele@gmail.com", "0484977384", new DateTime(2000, 3, 8), Gender.Female);
                 _dbContext.Users_Domain.Add(ime);
                 User camiel = new User("Camiel", "Deschacht", "camiel.deschacht@student.hogent.be", "0492554616", new DateTime(2001, 3, 9), Gender.Transgender);
                 _dbContext.Users_Domain.Add(camiel);

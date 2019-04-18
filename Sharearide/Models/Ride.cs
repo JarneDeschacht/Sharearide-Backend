@@ -20,9 +20,7 @@ namespace Sharearide.Models
         public Location PickUpLocation { get; set; }
         public Location DropOffLocation { get; set; }
         public IEnumerable<Location> Stopovers => LocationRides.Select(lr => lr.Location).ToList();
-        //public IEnumerable<User> People => UserRides.Select(u => u.User).ToList();
         public ICollection<LocationRide> LocationRides { get; private set; }
-        //public ICollection<UserRide> UserRides { get; private set; }
         public DateTime TravelDate
         {
             get => _travelDate;
@@ -97,13 +95,11 @@ namespace Sharearide.Models
             PassengerContribution = passengercontribution;
             TotalAvailableSeats = totalAvailableSeats;
             AvailableSeats = totalAvailableSeats;
-            //UserRides = new List<UserRide>();
             IsSoldOut = false;
         }
         public Ride()
         {
             LocationRides = new List<LocationRide>();
-            //    UserRides = new List<UserRide>();
         }
         #endregion
 

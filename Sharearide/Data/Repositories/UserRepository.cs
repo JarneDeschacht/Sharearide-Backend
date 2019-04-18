@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sharearide.DTOs;
 
 namespace Sharearide.Data.Repositories
 {
@@ -21,9 +22,13 @@ namespace Sharearide.Data.Repositories
         {
             _users.Add(user);
         }
-        public void Update(User user)
+        public UserDTO Update(UserDTO user)
         {
-            _context.Update(user);
+            var usr = GetById(user.id);
+            usr.EditUser(user.FirstName, user.LastName, user.Email, user.PhoneNumber, user.DateOfBirth, user.Gender);
+            _context.Update(usr);
+            _context.SaveChanges();
+            return GetByEmail(usr.Email);
         }
         public void Delete(User user)
         {
@@ -33,16 +38,16 @@ namespace Sharearide.Data.Repositories
         {
             return _users.OrderBy(u => u.FirstName).ToList();
         }
-        public User GetByEmail(string email)
+        public UserDTO GetByEmail(string email)
         {
-            return _users.SingleOrDefault(u => u.Email.Equals(email));
+            var user= _users.SingleOrDefault(u => u.Email.Equals(email));
+            UserDTO dto = new UserDTO(user);
+            dto.NrOfParticipatedRides = GetById(user.UserId).ParticipatedRides.Count();
+            return dto;
         }
         public User GetById(int id)
         {
-            return _users
-                .Include(u => u.UserRides)
-                .ThenInclude(ur => ur.Ride)
-                .SingleOrDefault(u => u.UserId == id);
+            return _users.Include(u =>u.UserRides).ThenInclude(ur => ur.Ride).SingleOrDefault(u => u.UserId == id);
         }
         public void SaveChanges()
         {

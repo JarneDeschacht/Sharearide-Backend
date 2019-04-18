@@ -38,45 +38,26 @@ namespace Sharearide.Data.Repositories
                 .ThenInclude(lr => lr.Location)
                 .ThenInclude(l => l.City)
                 .ToList();
-            ICollection<RideDTO> ridesDTO = new List<RideDTO>();
 
+            ICollection<RideDTO> ridesDTO = new List<RideDTO>();
             foreach (Ride r in rides)
             {
-                ridesDTO.Add(new RideDTO()
-                {
-                    AvailableSeats = r.AvailableSeats,
-                    DropOffLocation = r.DropOffLocation,
-                    IsSoldOut = r.IsSoldOut,
-                    PassengerContribution = r.PassengerContribution,
-                    PickUpLocation = r.PickUpLocation,
-                    ReturnDate = r.ReturnDate,
-                    RideId = r.RideId,
-                    Stopovers = r.Stopovers,
-                    TotalAvailableSeats = r.TotalAvailableSeats,
-                    TravelDate = r.TravelDate,
-                    IsRoundTrip = r.IsRoundTrip
-                });
+                ridesDTO.Add(new RideDTO(r));
             }
             return ridesDTO;
         }
 
-        public Ride GetById(int id)
+        public RideDTO GetById(int id)
         {
-            return _rides
+            Ride ride = _rides
                 .Include(r => r.DropOffLocation).ThenInclude(drop => drop.City)
                 .Include(r => r.PickUpLocation).ThenInclude(pick => pick.City)
                 .Include(r => r.LocationRides)
                 .ThenInclude(lr => lr.Location)
                 .ThenInclude(l => l.City)
                 .SingleOrDefault(r => r.RideId == id);
+            return new RideDTO(ride);
         }
-
-        public IEnumerable<Ride> GetByUser(User user)
-        {
-            //TODO
-            return _rides;
-        }
-
         public void SaveChanges()
         {
             _context.SaveChanges();

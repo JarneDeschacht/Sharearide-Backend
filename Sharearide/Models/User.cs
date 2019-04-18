@@ -19,7 +19,7 @@ namespace Sharearide.Models
         #region Properties
         public int UserId { get; set; }
         public ICollection<UserRide> UserRides { get; private set; }
-        public IEnumerable<Ride> Rides => UserRides != null ? UserRides.Select(r => r.Ride).ToList() : new List<Ride>();
+        public IEnumerable<Ride> ParticipatedRides => UserRides != null ? UserRides.Select(r => r.Ride).ToList() : new List<Ride>();
         public string LastName
         {
             get => _lastName;
@@ -74,8 +74,9 @@ namespace Sharearide.Models
                 _phoneNumber = value;
             }
         }
+        public string Token { get; set; }
         #endregion
-        
+
         #region Constructors
         public User(string firstName, string lastName, string email,string phoneNumber,DateTime dateOfBirth,Gender gender)
         {
@@ -112,9 +113,6 @@ namespace Sharearide.Models
             DateOfBirth = dateOfBirth;
             Gender = gender;
         }
-        #endregion
-
-        #region Methods
         public void AddRideToUser(Ride ride)
         {
             if (ride.CanUserBeAdded(this))

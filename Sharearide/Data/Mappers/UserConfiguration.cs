@@ -26,7 +26,7 @@ namespace Sharearide.Data.Mappers
             builder.HasMany(u => u.UserRides)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.Ignore(u => u.Rides);
+            builder.Ignore(u => u.ParticipatedRides);
         }
     }
 }
