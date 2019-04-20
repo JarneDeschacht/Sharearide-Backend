@@ -48,25 +48,29 @@ namespace Sharearide.Controllers
             var user = _userRepository.GetByEmail(email);
             if (user == null)
                 return NotFound();
-
+            user.NrOfOfferedRides = _rideRepository.GetAllOffered(user.id).Count();
             return user;
         }
 
         /// <summary>
-        /// Get user with given id
+        /// Get all rides that the given user in participated
         /// </summary>
         /// <param name="id">the id of the user</param>
-        /// <returns>a single object of user</returns>
-        [HttpGet("{id}/rides/")]
-        public IEnumerable<RideDTO> GetRidesOfUser(int id)
+        /// <returns>List of all participad rides of the given user</returns>
+        [HttpGet("{id}/participatedrides/")]
+        public IEnumerable<RideDTO> GetParticipatedRidesOfUser(int id)
         {
-            var user = _userRepository.GetById(id);
-            ICollection<RideDTO> rides = new List<RideDTO>();
-            foreach (Ride r in user.ParticipatedRides)
-            {
-                rides.Add(_rideRepository.GetById(r.RideId));
-            }
-            return rides;
+            return _rideRepository.GetAllParticipated(id).OrderBy(r => r.TravelDate);
+        }
+        /// <summary>
+        /// Get all rides that the given user offered
+        /// </summary>
+        /// <param name="id">the id of the user</param>
+        /// <returns>List of all offered rides of the given user</returns>
+        [HttpGet("{id}/offeredrides/")]
+        public IEnumerable<RideDTO> GetOfferedRidesOfUser(int id)
+        {
+            return _rideRepository.GetAllOffered(id).OrderBy(r => r.TravelDate);
         }
         /// <summary>
         /// Adds a new user to the database
@@ -95,6 +99,7 @@ namespace Sharearide.Controllers
 
             var usr = _userRepository.Update(user);
             _userRepository.SaveChanges();
+            usr.NrOfOfferedRides = _rideRepository.GetAllOffered(user.id).Count();
             return usr;
         }
         /// <summary>

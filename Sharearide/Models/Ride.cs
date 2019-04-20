@@ -13,13 +13,16 @@ namespace Sharearide.Models
         private double _passengerContribution;
         private int _totalAvailableSeats;
         private int _availableSeats;
+        private User _owner;
         #endregion
 
         #region Properties
         public int RideId { get; set; }
         public Location PickUpLocation { get; set; }
+        public User Owner { get; set; }
+        public TimeSpan Departure { get; set; }
         public Location DropOffLocation { get; set; }
-        public IEnumerable<Location> Stopovers => LocationRides.Select(lr => lr.Location).ToList();
+        public IEnumerable<Location> Stopovers => LocationRides.OrderBy(lr => lr.Index).Select(lr => lr.Location).ToList();
         public ICollection<LocationRide> LocationRides { get; private set; }
         public DateTime TravelDate
         {
@@ -32,17 +35,17 @@ namespace Sharearide.Models
                 _travelDate = value;
             }
         }
-        public bool IsRoundTrip { get; set; }
-        public DateTime ReturnDate
-        {
-            get => _returnDate;
-            set
-            {
-                if (IsRoundTrip && (value.Date <= DateTime.Today || value.Date < _travelDate.Date))
-                    throw new ArgumentException("ReturnDate must be in the future and the return must be later than the travelDate");
-                _returnDate = value;
-            }
-        }
+        //public bool IsRoundTrip { get; set; }
+        //public DateTime ReturnDate
+        //{
+        //    get => _returnDate;
+        //    set
+        //    {
+        //        if (IsRoundTrip && (value.Date <= DateTime.Today || value.Date < _travelDate.Date))
+        //            throw new ArgumentException("ReturnDate must be in the future and the return must be later than the travelDate");
+        //        _returnDate = value;
+        //    }
+        //}
         public double PassengerContribution
         {
             get => _passengerContribution;
@@ -73,29 +76,31 @@ namespace Sharearide.Models
                 _availableSeats = value;
             }
         }
-        public bool IsSoldOut { get; set; }
+        public bool IsSoldOut => AvailableSeats == 0;
         #endregion
 
         #region Constructors
         public Ride(Location pickup,Location dropOff,ICollection<Location> stopovers
-            ,DateTime travelDate,bool isRoundTrip, DateTime returnDate,double passengercontribution
-            ,int totalAvailableSeats)
+            ,DateTime travelDate,/*bool isRoundTrip, DateTime returnDate,*/double passengercontribution
+            ,int totalAvailableSeats,User owner,TimeSpan departure)
         {
+            Owner = owner;
+            Departure = departure;
             PickUpLocation = pickup;
             DropOffLocation = dropOff;
             LocationRides = new List<LocationRide>();
             if (stopovers != null)
             {
+                int index = 0;
                 foreach (var loc in stopovers)
-                    LocationRides.Add(new LocationRide(loc, this));
+                    LocationRides.Add(new LocationRide(loc, this,index++));
             }
             TravelDate = travelDate;
-            IsRoundTrip = isRoundTrip;
-            ReturnDate = returnDate;
+            //IsRoundTrip = isRoundTrip;
+            //ReturnDate = returnDate;
             PassengerContribution = passengercontribution;
             TotalAvailableSeats = totalAvailableSeats;
             AvailableSeats = totalAvailableSeats;
-            IsSoldOut = false;
         }
         public Ride()
         {
@@ -106,16 +111,16 @@ namespace Sharearide.Models
         #region Methods
         public Boolean CanUserBeAdded(User user)
         {
+            if (user.UserId == this.Owner.UserId) //check if user is not the owner
+                return false;
+
             if (!IsSoldOut)
             {
                 if (AvailableSeats > 0)
                 {
                     AvailableSeats--;
                     return true;
-                }   
-
-                if (AvailableSeats == 0)
-                    IsSoldOut = true;
+                }
             }
             return false;
         }

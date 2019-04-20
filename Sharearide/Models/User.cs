@@ -115,8 +115,13 @@ namespace Sharearide.Models
         }
         public void AddRideToUser(Ride ride)
         {
-            if (ride.CanUserBeAdded(this))
-                UserRides.Add(new UserRide(this, ride));
+            if(!CheckIfUserIsNotAlreadyJoinedToARide(ride))
+                if (ride.CanUserBeAdded(this))
+                    UserRides.Add(new UserRide(this, ride));
+        }
+        public bool CheckIfUserIsNotAlreadyJoinedToARide(Ride ride)
+        {
+            return UserRides.Select(ur => ur.RideId).ToList().Contains(ride.RideId);
         }
         #endregion
     }

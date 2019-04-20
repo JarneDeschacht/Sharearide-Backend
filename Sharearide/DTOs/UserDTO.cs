@@ -19,6 +19,7 @@ namespace Sharearide.DTOs
         public string PhoneNumber { get; set; }
         public string Token { get; set; }
         public int NrOfParticipatedRides { get; set; }
+        public int NrOfOfferedRides { get; set; }
 
         public UserDTO(User user)
         {

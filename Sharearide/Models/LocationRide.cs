@@ -17,18 +17,24 @@ namespace Sharearide.Models
         public Ride Ride { get; set; }
         #endregion
 
+        #region Extra
+        public int Index { get; set; }
+        #endregion
+
         #region Constructors
         protected LocationRide()
         {
 
         }
-        public LocationRide(Location location,Ride ride) : this()
+        public LocationRide(Location location,Ride ride,int index) : this()
         {
             Location = location;
             LocationId = location.LocationId;
 
             Ride = ride;
             RideId = ride.RideId;
+
+            Index = index;
         }
         #endregion
     }

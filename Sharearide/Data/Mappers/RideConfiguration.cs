@@ -23,6 +23,10 @@ namespace Sharearide.Data.Mappers
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Ignore(r => r.Stopovers);
+            builder.HasOne(r => r.Owner)
+                .WithMany()
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

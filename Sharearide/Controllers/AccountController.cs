@@ -10,6 +10,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Sharearide.DTOs;
 using Sharearide.Models;
+using System.Linq;
 
 namespace Sharearide.Controllers
 {
@@ -21,18 +22,21 @@ namespace Sharearide.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IUserRepository _userRepository;
+        private readonly IRideRepository _rideRepository;
         private readonly IConfiguration _config;
 
         public AccountController(
           SignInManager<IdentityUser> signInManager,
           UserManager<IdentityUser> userManager,
           IUserRepository userRepository,
-          IConfiguration config)
+          IConfiguration config,
+          IRideRepository rideRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _userRepository = userRepository;
             _config = config;
+            _rideRepository = rideRepository;
         }
 
         /// <summary>
@@ -45,6 +49,7 @@ namespace Sharearide.Controllers
         {
             var user = await _userManager.FindByNameAsync(model.Email);
             UserDTO userIn = _userRepository.GetByEmail(model.Email);
+            userIn.NrOfOfferedRides = _rideRepository.GetAllOffered(userIn.id).Count();
 
             if (user != null)
             {
@@ -53,6 +58,7 @@ namespace Sharearide.Controllers
                 if (result.Succeeded)
                 {
                     userIn.Token = GetToken(user);
+
                     return Ok(userIn); //returns the user                 
                 }
             }
@@ -104,6 +110,13 @@ namespace Sharearide.Controllers
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        [AllowAnonymous]
+        [HttpGet("checkusername")]
+        public async Task<ActionResult<Boolean>> CheckAvailableUserName(string email)
+        {
+            var user = await _userManager.FindByNameAsync(email);
+            return user == null;
         }
     }
 }
