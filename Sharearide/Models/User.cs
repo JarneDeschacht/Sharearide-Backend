@@ -30,7 +30,6 @@ namespace Sharearide.Models
                 _lastName = value;
             }
         }
-
         public string FirstName
         {
             get => _firstName;
@@ -122,6 +121,14 @@ namespace Sharearide.Models
         public bool CheckIfUserIsNotAlreadyJoinedToARide(Ride ride)
         {
             return UserRides.Select(ur => ur.RideId).ToList().Contains(ride.RideId);
+        }
+        public void RemoveFromRide(Ride ride)
+        {
+            UserRides.Remove(UserRides.SingleOrDefault(ur => ur.RideId == ride.RideId && ur.UserId == this.UserId));
+        }
+        public bool ParticipatedInRide(int rideid)
+        {
+            return UserRides.Where(ur => ur.RideId == rideid).ToList().Count > 0;
         }
         #endregion
     }

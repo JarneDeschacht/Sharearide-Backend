@@ -15,5 +15,6 @@ namespace Sharearide.Models
         void Delete(User user);
         UserDTO Update(UserDTO user);
         void SaveChanges();
+        void RemoveRideForAllUsers(Ride ride);
     }
 }

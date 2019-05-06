@@ -10,7 +10,5 @@ namespace Sharearide.Models
     {
         Male,
         Female,
-        Transgender,
-        Intersexual
     }
 }

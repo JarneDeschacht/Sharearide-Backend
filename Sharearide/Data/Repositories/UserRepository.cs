@@ -53,5 +53,14 @@ namespace Sharearide.Data.Repositories
         {
             _context.SaveChanges();
         }
+
+        public void RemoveRideForAllUsers(Ride ride)
+        {
+            List<User> users = _users.Where(u => u.ParticipatedInRide(ride.RideId)).ToList();
+            foreach(var user in users)
+            {
+                user.RemoveFromRide(ride);
+            }
+        }
     }
 }

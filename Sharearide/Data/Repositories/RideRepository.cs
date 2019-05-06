@@ -42,7 +42,7 @@ namespace Sharearide.Data.Repositories
             }
 
             Ride newR = new Ride(r.PickUpLocation, r.DropOffLocation, hulp, r.TravelDate,
-                r.PassengerContribution, r.TotalAvailableSeats,_userRepository.GetById(r.Owner.id), r.Departure);
+                r.PassengerContribution, r.TotalAvailableSeats,_userRepository.GetById(r.Owner.id));
 
             //solve possible duplicate data and errors
             //locations and cities will not be recreated when they already exist with the same properties
@@ -66,6 +66,7 @@ namespace Sharearide.Data.Repositories
 
         public void Delete(Ride ride)
         {
+            ride.RemoveStopovers();
             _rides.Remove(ride);
         }
 
@@ -154,7 +155,7 @@ namespace Sharearide.Data.Repositories
             {
                 ridesDTO.Add(GetByIdDTO(rideId));
             }
-            return ridesDTO;
+            return ridesDTO.OrderBy(r => r.TravelDate).ThenBy(r => r.RideId).ToList();
         }
         private bool CityExists(City city) => _cities.Contains(city);
         private bool LocationExists(Location location) => GetLocation(location) != null;

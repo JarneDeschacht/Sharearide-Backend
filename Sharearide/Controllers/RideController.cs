@@ -14,7 +14,8 @@ namespace Sharearide.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
-    //[Authorize] TODO
+    [Authorize]
+
     public class RideController : ControllerBase
     {
         private readonly IRideRepository _rideRepository;
@@ -61,13 +62,13 @@ namespace Sharearide.Controllers
         /// <param name="rideid"></param>
         /// <param name="userid"></param>
         [HttpPost("{rideid}/adduser/{userid}")]
-        public ActionResult AddUserToRide(int rideid, int userid)
+        public ActionResult<RideDTO> AddUserToRide(int rideid, int userid)
         {
             var ride = _rideRepository.GetById(rideid);
             var user = _userRepository.GetById(userid);
             user.AddRideToUser(ride);
             _userRepository.SaveChanges();
-            return NoContent();
+            return Ok(GetById(ride.RideId));
         }
         /// <summary>
         /// Adds a ride
@@ -83,6 +84,38 @@ namespace Sharearide.Controllers
             _rideRepository.Add(ride);
             _rideRepository.SaveChanges();
             return CreatedAtAction(nameof(GetById), new { id = ride.RideId },ride);
+        }
+
+        /// <summary>
+        /// Removes a user from the ride
+        /// </summary>
+        /// <param name="rideid"></param>
+        /// <param name="userid"></param>
+        /// <returns> the changed ride </returns>
+        [HttpPost("{rideid}/removeuser/{userid}")]
+        public ActionResult<RideDTO> RemoveUserFromRide(int rideid,int userid)
+        {
+            var ride = _rideRepository.GetById(rideid);
+            var user = _userRepository.GetById(userid);
+            user.RemoveFromRide(ride);
+            ride.AvailableSeats++;
+            _userRepository.SaveChanges();
+            return Ok(GetById(ride.RideId));
+        }
+
+        /// <summary>
+        /// Removes a ride
+        /// </summary>
+        /// <param name="rideid"></param>
+        /// <returns>the removed ride</returns>
+        [HttpDelete("{rideid}")]
+        public ActionResult<Ride> RemoveRide(int rideid)
+        {
+            var ride = _rideRepository.GetById(rideid);
+            _userRepository.RemoveRideForAllUsers(ride);
+            _rideRepository.Delete(ride);
+            _userRepository.SaveChanges();
+            return ride;
         }
     }
 }

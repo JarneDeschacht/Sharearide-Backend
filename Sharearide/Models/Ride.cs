@@ -20,7 +20,6 @@ namespace Sharearide.Models
         public int RideId { get; set; }
         public Location PickUpLocation { get; set; }
         public User Owner { get; set; }
-        public TimeSpan Departure { get; set; }
         public Location DropOffLocation { get; set; }
         public IEnumerable<Location> Stopovers => LocationRides.OrderBy(lr => lr.Index).Select(lr => lr.Location).ToList();
         public ICollection<LocationRide> LocationRides { get; private set; }
@@ -29,9 +28,8 @@ namespace Sharearide.Models
             get => _travelDate;
             set
             {
-                if (value == null || value.Date <= DateTime.Today)
-                    throw new ArgumentException("TravelDate must be in the future and the ride must" +
-                        " be registered at least one day in advance");
+                if (value == null /*|| value.Date <= DateTime.Today*/)
+                    throw new ArgumentException("TravelDate is required");
                 _travelDate = value;
             }
         }
@@ -82,10 +80,9 @@ namespace Sharearide.Models
         #region Constructors
         public Ride(Location pickup,Location dropOff,ICollection<Location> stopovers
             ,DateTime travelDate,/*bool isRoundTrip, DateTime returnDate,*/double passengercontribution
-            ,int totalAvailableSeats,User owner,TimeSpan departure)
+            ,int totalAvailableSeats,User owner)
         {
             Owner = owner;
-            Departure = departure;
             PickUpLocation = pickup;
             DropOffLocation = dropOff;
             LocationRides = new List<LocationRide>();
@@ -123,6 +120,14 @@ namespace Sharearide.Models
                 }
             }
             return false;
+        }
+        public void RemoveStopovers()
+        {
+            List<LocationRide> stops = LocationRides.Where(l => l.RideId == this.RideId).ToList();
+            foreach(var stop in stops)
+            {
+                LocationRides.Remove(stop);
+            }
         }
         #endregion
 

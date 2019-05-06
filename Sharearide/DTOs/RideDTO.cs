@@ -29,8 +29,6 @@ namespace Sharearide.DTOs
         public bool IsSoldOut { get; set; }
         //public bool IsRoundTrip { get; set; }
         [Required]
-        public TimeSpan Departure { get; set; }
-        [Required]
         public UserDTO Owner { get; set; }
 
         public RideDTO(Ride r)
@@ -48,7 +46,6 @@ namespace Sharearide.DTOs
                 TotalAvailableSeats = r.TotalAvailableSeats;
                 TravelDate = r.TravelDate;
                 //IsRoundTrip = r.IsRoundTrip;
-                Departure = r.Departure;
                 Owner = new UserDTO(r.Owner);
             }
         }
