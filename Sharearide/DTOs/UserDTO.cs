@@ -9,8 +9,6 @@ namespace Sharearide.DTOs
     public class UserDTO
     {
         public int id { get; set; }
-        //public IEnumerable<RideDTO> OfferedRides { get; set; } COMING SOON
-        //public IEnumerable<RideDTO> ParticipatedRides { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

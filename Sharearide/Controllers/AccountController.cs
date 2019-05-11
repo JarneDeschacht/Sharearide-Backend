@@ -57,7 +57,7 @@ namespace Sharearide.Controllers
 
                 if (result.Succeeded)
                 {
-                    userIn.Token = GetToken(user);
+                    userIn.Token = GetToken(user,userIn.FirstName);
 
                     return Ok(userIn); //returns the user                 
                 }
@@ -76,27 +76,27 @@ namespace Sharearide.Controllers
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO model)
         {
             IdentityUser user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            User usr = new User { Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,DateOfBirth = model.DateOfBirth,Gender = model.Gender,PhoneNumber = model.PhoneNumber };
+            User usr = new User { Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, DateOfBirth = model.DateOfBirth, Gender = model.Gender, PhoneNumber = model.PhoneNumber };
             var result = await _userManager.CreateAsync(user, model.Password);
-            
+
 
             if (result.Succeeded)
             {
                 _userRepository.Add(usr);
                 _userRepository.SaveChanges();
-                usr.Token = GetToken(user);
+                usr.Token = GetToken(user,model.FirstName);
                 return Ok(_userRepository.GetByEmail(usr.Email));
             }
             return BadRequest();
         }
 
-        private String GetToken(IdentityUser user)
+        private String GetToken(IdentityUser user,string name)
         {
             // Create the token
             var claims = new[]
             {
-              new Claim(JwtRegisteredClaimNames.Sub, user.Email), //email
-              new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName) //email
+              new Claim(JwtRegisteredClaimNames.Sub,name), //name
+              new Claim(JwtRegisteredClaimNames.UniqueName,name) //name
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -104,7 +104,7 @@ namespace Sharearide.Controllers
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-              null,null,
+              null, null,
               claims,
               expires: DateTime.Now.AddMinutes(30),
               signingCredentials: creds);
@@ -117,6 +117,17 @@ namespace Sharearide.Controllers
         {
             var user = await _userManager.FindByNameAsync(email);
             return user == null;
+        }
+
+        [HttpPut("ChangePassword/{email}/{oldPassw}/{newPassw}")]
+        public async Task<ActionResult<Boolean>> ChangePassword(string email, string oldPassw, string newPassw)
+        {
+            var identityUser = await _userManager.FindByNameAsync(email);
+            if (identityUser == null)
+                return NotFound();
+
+            var result = await _userManager.ChangePasswordAsync(identityUser, oldPassw, newPassw);
+            return result.Succeeded;
         }
     }
 }
