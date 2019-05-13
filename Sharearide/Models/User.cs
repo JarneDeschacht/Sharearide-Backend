@@ -74,6 +74,7 @@ namespace Sharearide.Models
             }
         }
         public string Token { get; set; }
+        public string URL { get; set; }
         #endregion
 
         #region Constructors
@@ -86,10 +87,12 @@ namespace Sharearide.Models
             DateOfBirth = dateOfBirth;
             Gender = gender;
             UserRides = new HashSet<UserRide>();
+            URL = "Resources/Images/profilepic.png";
     }
         public User()
         {
             UserRides = new HashSet<UserRide>();
+            URL = "Resources/Images/profilepic.png";
         }
         #endregion
 

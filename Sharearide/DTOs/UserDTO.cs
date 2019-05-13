@@ -18,6 +18,7 @@ namespace Sharearide.DTOs
         public string Token { get; set; }
         public int NrOfParticipatedRides { get; set; }
         public int NrOfOfferedRides { get; set; }
+        public string URL { get; set; }
 
         public UserDTO(User user)
         {
@@ -31,6 +32,7 @@ namespace Sharearide.DTOs
                 DateOfBirth = user.DateOfBirth;
                 PhoneNumber = user.PhoneNumber;
                 Token = user.Token;
+                URL = user.URL;
             }
         }
     }

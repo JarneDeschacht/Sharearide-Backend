@@ -1,33 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Sharearide.Data;
 using Sharearide.Data.Repositories;
 using Sharearide.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using NSwag.SwaggerGeneration.Processors.Security;
 using NSwag;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace Sharearide
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration,IHostingEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -99,6 +99,11 @@ namespace Sharearide
                 options.User.RequireUniqueEmail = true;
             });
             services.AddCors(options => options.AddPolicy("AllowAllOrigins", builder => builder.AllowAnyOrigin()));
+
+            var webRoot = _env.WebRootPath;
+            services.AddSingleton<IFileProvider>(
+                          new PhysicalFileProvider(
+                            Path.Combine(webRoot, "Resources")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,6 +112,7 @@ namespace Sharearide
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
             }
             else
             {
@@ -114,12 +120,18 @@ namespace Sharearide
                 app.UseHsts();
             }
             app.UseCors("AllowAllOrigins");
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
             app.UseSwaggerUi3();
             app.UseSwagger();
-            //sharearideDataInitializer.InitializeData().Wait();
+            sharearideDataInitializer.InitializeData().Wait();
         }
     }
 }

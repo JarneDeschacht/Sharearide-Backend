@@ -19,4 +19,10 @@
     <PackageReference Include="NSwag.AspNetCore" Version="12.0.15" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Resources\Images\43301697_1691577070954168_4779400862088822784_n11_05_2019225427.jpg" />
+    <None Include="wwwroot\Resources\Images\ime11_05_2019225657.jpg" />
+    <None Include="wwwroot\Resources\Images\profilepic.png" />
+  </ItemGroup>
+
 </Project>
