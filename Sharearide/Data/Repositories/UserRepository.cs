@@ -30,14 +30,6 @@ namespace Sharearide.Data.Repositories
             _context.SaveChanges();
             return GetByEmail(usr.Email);
         }
-        public void Delete(User user)
-        {
-            _users.Remove(user);
-        }
-        public IEnumerable<User> GetAll()
-        {
-            return _users.OrderBy(u => u.FirstName).ToList();
-        }
         public UserDTO GetByEmail(string email)
         {
             var user= _users.SingleOrDefault(u => u.Email.Equals(email));
@@ -53,7 +45,6 @@ namespace Sharearide.Data.Repositories
         {
             _context.SaveChanges();
         }
-
         public void RemoveRideForAllUsers(Ride ride)
         {
             List<User> users = _users.Where(u => u.ParticipatedInRide(ride.RideId)).ToList();

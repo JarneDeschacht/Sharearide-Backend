@@ -11,6 +11,9 @@ using Sharearide.DTOs;
 
 namespace Sharearide.Controllers
 {
+    /// <summary>
+    /// controller to control the user
+    /// </summary>
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Route("api/[controller]")]
     [Produces("application/json")]
@@ -21,22 +24,16 @@ namespace Sharearide.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IRideRepository _rideRepository;
 
+        /// <summary>
+        /// constructor to create controller and initialize the repo's
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="rideRepository"></param>
         public UserController(IUserRepository userRepository,IRideRepository rideRepository)
         {
             _userRepository = userRepository;
             _rideRepository = rideRepository;
         }
-
-        /// <summary>
-        /// Get all users ordered by firstname
-        /// </summary>
-        /// <returns>array of users</returns>
-        [HttpGet]
-        public IEnumerable<User> GetAllUsers()
-        {
-            return _userRepository.GetAll();
-        }
-
         /// <summary>
         /// Get user with given email
         /// </summary>
@@ -84,7 +81,7 @@ namespace Sharearide.Controllers
 
             _userRepository.Add(user);
             _userRepository.SaveChanges();
-            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.Email }, user);
         }
         /// <summary>
         /// Modifies a user
@@ -102,21 +99,5 @@ namespace Sharearide.Controllers
             usr.NrOfOfferedRides = _rideRepository.GetAllOffered(user.id).Count();
             return usr;
         }
-        /// <summary>
-        /// Deletes a user
-        /// </summary>
-        /// <param name="id">the id of the user to be deleted</param>
-        [HttpDelete("{id}")]
-        public ActionResult<User> DeleteUser(int id)
-        {
-            var user = _userRepository.GetById(id);
-            if (user == null)
-                return NotFound();
-
-            _userRepository.Delete(user);
-            _userRepository.SaveChanges();
-            return user;
-        }
-
     }
 }

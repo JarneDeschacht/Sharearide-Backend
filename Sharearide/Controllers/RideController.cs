@@ -11,6 +11,9 @@ using Sharearide.Models;
 
 namespace Sharearide.Controllers
 {
+    /// <summary>
+    /// controller to control the rides
+    /// </summary>
     [ApiConventionType(typeof(DefaultApiConventions))]
     [Route("api/[controller]")]
     [ApiController]
@@ -22,20 +25,15 @@ namespace Sharearide.Controllers
         private readonly IRideRepository _rideRepository;
         private readonly IUserRepository _userRepository;
 
+        /// <summary>
+        /// constructor to create the controller and to initialize the repo's
+        /// </summary>
+        /// <param name="rideRepository"></param>
+        /// <param name="userRepository"></param>
         public RideController(IRideRepository rideRepository,IUserRepository userRepository)
         {
             _rideRepository = rideRepository;
             _userRepository = userRepository;
-        }
-
-        /// <summary>
-        /// Get all rides
-        /// </summary>
-        /// <returns>List of all rides</returns>
-        [HttpGet]
-        public IEnumerable<RideDTO> GetAll()
-        {
-            return _rideRepository.GetAll();
         }
         /// <summary>
         /// Get all rides that are available for a user to join
@@ -47,16 +45,7 @@ namespace Sharearide.Controllers
         {
             return _rideRepository.GetAllAvailableRidesForUser(id);
         }
-        /// <summary>
-        /// Returns ride with given id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>ride with given id</returns>
-        [HttpGet("{id}")]
-        public RideDTO GetById(int id)
-        {
-            return _rideRepository.GetByIdDTO(id);
-        }
+
         /// <summary>
         /// Adds a user to a ride
         /// </summary>
@@ -117,6 +106,16 @@ namespace Sharearide.Controllers
             _rideRepository.Delete(ride);
             _userRepository.SaveChanges();
             return ride;
+        }
+        /// <summary>
+        /// Returns ride with given id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>ride with given id</returns>
+        [HttpGet("{id}")]
+        public RideDTO GetById(int id)
+        {
+            return _rideRepository.GetByIdDTO(id);
         }
     }
 }

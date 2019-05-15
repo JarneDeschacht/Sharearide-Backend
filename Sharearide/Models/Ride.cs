@@ -9,11 +9,9 @@ namespace Sharearide.Models
     {
         #region Fields
         private DateTime _travelDate;
-        private DateTime _returnDate;
         private double _passengerContribution;
         private int _totalAvailableSeats;
         private int _availableSeats;
-        private User _owner;
         #endregion
 
         #region Properties
@@ -33,17 +31,6 @@ namespace Sharearide.Models
                 _travelDate = value;
             }
         }
-        //public bool IsRoundTrip { get; set; }
-        //public DateTime ReturnDate
-        //{
-        //    get => _returnDate;
-        //    set
-        //    {
-        //        if (IsRoundTrip && (value.Date <= DateTime.Today || value.Date < _travelDate.Date))
-        //            throw new ArgumentException("ReturnDate must be in the future and the return must be later than the travelDate");
-        //        _returnDate = value;
-        //    }
-        //}
         public double PassengerContribution
         {
             get => _passengerContribution;
@@ -79,7 +66,7 @@ namespace Sharearide.Models
 
         #region Constructors
         public Ride(Location pickup,Location dropOff,ICollection<Location> stopovers
-            ,DateTime travelDate,/*bool isRoundTrip, DateTime returnDate,*/double passengercontribution
+            ,DateTime travelDate,double passengercontribution
             ,int totalAvailableSeats,User owner)
         {
             Owner = owner;
@@ -93,8 +80,6 @@ namespace Sharearide.Models
                     LocationRides.Add(new LocationRide(loc, this,index++));
             }
             TravelDate = travelDate;
-            //IsRoundTrip = isRoundTrip;
-            //ReturnDate = returnDate;
             PassengerContribution = passengercontribution;
             TotalAvailableSeats = totalAvailableSeats;
             AvailableSeats = totalAvailableSeats;

@@ -7,17 +7,28 @@ using Sharearide.Models;
 
 namespace Sharearide.Controllers
 {
+    /// <summary>
+    /// class to control the user
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UploadController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
 
+        /// <summary>
+        /// creates the controller and initializes the userRepo
+        /// </summary>
+        /// <param name="userRepository"></param>
         public UploadController(IUserRepository userRepository)
         {
             this._userRepository = userRepository;
         }
 
+        /// <summary>
+        /// Adds the given image to the static files
+        /// </summary>
+        /// <returns></returns>
         [HttpPost, DisableRequestSizeLimit]
         public IActionResult Upload()
         {
@@ -51,11 +62,16 @@ namespace Sharearide.Controllers
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, "Internal server error");
             }
         }
+        /// <summary>
+        /// Ads the url of the stored profile picture to the user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("addUrlToUser")]
         public IActionResult AddUrlToUser(ImageDTO model)
         {

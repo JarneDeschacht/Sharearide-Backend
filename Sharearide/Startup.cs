@@ -56,7 +56,6 @@ namespace Sharearide
 
             services.AddScoped<DataInitializer>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IRideRepository, RideRepository>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<SharearideContext>();

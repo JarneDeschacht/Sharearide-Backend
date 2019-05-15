@@ -14,6 +14,9 @@ using System.Linq;
 
 namespace Sharearide.Controllers
 {
+    /// <summary>
+    /// controller to control the accounts 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
@@ -25,6 +28,14 @@ namespace Sharearide.Controllers
         private readonly IRideRepository _rideRepository;
         private readonly IConfiguration _config;
 
+        /// <summary>
+        /// constructor to create the AccountController and initializes the repo
+        /// </summary>
+        /// <param name="signInManager"></param>
+        /// <param name="userManager"></param>
+        /// <param name="userRepository"></param>
+        /// <param name="config"></param>
+        /// <param name="rideRepository"></param>
         public AccountController(
           SignInManager<IdentityUser> signInManager,
           UserManager<IdentityUser> userManager,
@@ -111,6 +122,11 @@ namespace Sharearide.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        /// <summary>
+        /// chacks if an email is already used
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>true or false depending if the email is already used</returns>
         [AllowAnonymous]
         [HttpGet("checkusername")]
         public async Task<ActionResult<Boolean>> CheckAvailableUserName(string email)
@@ -119,6 +135,13 @@ namespace Sharearide.Controllers
             return user == null;
         }
 
+        /// <summary>
+        /// Changes the password of a user
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="oldPassw"></param>
+        /// <param name="newPassw"></param>
+        /// <returns>true or false depending if the operation succeeded</returns>
         [HttpPut("ChangePassword/{email}/{oldPassw}/{newPassw}")]
         public async Task<ActionResult<Boolean>> ChangePassword(string email, string oldPassw, string newPassw)
         {

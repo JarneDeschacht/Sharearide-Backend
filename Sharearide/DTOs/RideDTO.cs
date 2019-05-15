@@ -19,7 +19,6 @@ namespace Sharearide.DTOs
         public IEnumerable<Location> Stopovers { get; set; }
         [Required]
         public DateTime TravelDate { get; set; }
-        //public DateTime ReturnDate { get; set; }
         [Required]
         public double PassengerContribution { get; set; }
         [Required]
@@ -27,7 +26,6 @@ namespace Sharearide.DTOs
         [Required]
         public int AvailableSeats { get; set; }
         public bool IsSoldOut { get; set; }
-        //public bool IsRoundTrip { get; set; }
         [Required]
         public UserDTO Owner { get; set; }
 
@@ -40,12 +38,10 @@ namespace Sharearide.DTOs
                 IsSoldOut = r.IsSoldOut;
                 PassengerContribution = r.PassengerContribution;
                 PickUpLocation = r.PickUpLocation;
-                //ReturnDate = r.ReturnDate;
                 RideId = r.RideId;
                 Stopovers = r.Stopovers;
                 TotalAvailableSeats = r.TotalAvailableSeats;
                 TravelDate = r.TravelDate;
-                //IsRoundTrip = r.IsRoundTrip;
                 Owner = new UserDTO(r.Owner);
             }
         }

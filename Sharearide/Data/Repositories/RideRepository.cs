@@ -70,27 +70,6 @@ namespace Sharearide.Data.Repositories
             _rides.Remove(ride);
         }
 
-        public IEnumerable<RideDTO> GetAll()
-        {
-            var rides = _rides
-                .Include(r => r.Owner)
-                .Include(r => r.DropOffLocation)
-                    .ThenInclude(drop => drop.City)
-                .Include(r => r.PickUpLocation)
-                    .ThenInclude(pick => pick.City)
-                .Include(r => r.LocationRides)
-                    .ThenInclude(lr => lr.Location)
-                    .ThenInclude(l => l.City)
-                .ToList();
-
-            ICollection<RideDTO> ridesDTO = new List<RideDTO>();
-            foreach (Ride r in rides)
-            {
-                ridesDTO.Add(new RideDTO(r));
-            }
-            return ridesDTO;
-        }
-
         public IEnumerable<RideDTO> GetAllAvailableRidesForUser(int id)
         {
             var user = _userRepository.GetById(id);
@@ -106,13 +85,11 @@ namespace Sharearide.Data.Repositories
             IList<int> offeredRides = _rides.Where(r => r.Owner.UserId == id).Select(r => r.RideId).ToList();
             return ToRideDTO(offeredRides);
         }
-
         public IEnumerable<RideDTO> GetAllParticipated(int id)
         {
             var user = _userRepository.GetById(id);
             return ToRideDTO(user.ParticipatedRides.Select(r => r.RideId).ToList());
         }
-
         public Ride GetById(int id)
         {
             return _rides
@@ -124,7 +101,6 @@ namespace Sharearide.Data.Repositories
                     .ThenInclude(l => l.City)
                 .SingleOrDefault(r => r.RideId == id);
         }
-
         public RideDTO GetByIdDTO(int id)
         {
             Ride ride = _rides
@@ -137,17 +113,10 @@ namespace Sharearide.Data.Repositories
                 .SingleOrDefault(r => r.RideId == id);
             return new RideDTO(ride);
         }
-
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
-
-        public void Update(Ride ride)
-        {
-            _context.Update(ride);
-        }
-
         private ICollection<RideDTO> ToRideDTO(IEnumerable<int> rides)
         {
             ICollection<RideDTO> ridesDTO = new List<RideDTO>();
