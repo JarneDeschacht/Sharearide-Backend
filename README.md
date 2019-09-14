@@ -1,7 +1,3 @@
-# Sharearide-Backend
+# Share a ride
 
-URL: https://sharearide-frontend.herokuapp.com/
-
-## Inloggegevens <br/>
-**E-mail** : student.web4@hogent.be </br>
-**Wachtwoord** : Gelukkiggeennetbe@ns1
+frontend: https://github.com/JarneDeschacht/Sharearide-Frontend/
